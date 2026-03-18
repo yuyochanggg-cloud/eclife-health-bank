@@ -447,7 +447,8 @@ export default function App() {
               </div>
 
               <div className="bg-white rounded-[2rem] p-3 shadow-md border border-slate-100">
-                {lbMode === 'personal' && getPersonalLeaderboard().map((u, index) => (
+                {/* 🌟 只有這裡加了 .slice(0, 30) */}
+                {lbMode === 'personal' && getPersonalLeaderboard().slice(0, 30).map((u, index) => (
                   <div key={u.id} className="flex items-center justify-between p-4 border-b border-slate-50 last:border-0 text-left">
                     <div className="flex items-center space-x-4 w-full">
                       <div className={`font-black w-7 text-center text-xl flex-shrink-0 ${index < 3 ? 'text-blue-500' : 'text-slate-300'}`}>{index+1}</div>
@@ -464,6 +465,7 @@ export default function App() {
                   </div>
                 ))}
                 
+                {/* 團隊榜沒動，顯示所有部門 */}
                 {lbMode === 'team' && getTeamLeaderboard().map((dept, index) => (
                   <div key={dept.name} className="flex items-center justify-between p-4 border-b border-slate-50 last:border-0 text-left">
                     <div className="flex items-center space-x-4 w-full">
@@ -533,7 +535,6 @@ function NavBtn({ active, onClick, icon, label }) {
   );
 }
 
-// 🌟 登入畫面：接收 mascotUrl 參數並套用防呆圖片
 function LoginScreen({ onLogin, loading, mascotUrl }) {
   const [id, setId] = useState(''); const [pw, setPw] = useState('');
   return (
@@ -543,7 +544,6 @@ function LoginScreen({ onLogin, loading, mascotUrl }) {
 
       <div className="bg-white/95 backdrop-blur-xl w-full max-w-md p-10 rounded-[3rem] shadow-2xl text-center relative z-10 border border-white/20">
         
-        {/* 🌟 動態替換吉祥物圖片 (錯誤會 fallback 到預設圖) */}
         <img 
           src={mascotUrl || "/1101109-HA-杯墊興爸.png"} 
           onError={(e) => { e.target.onerror = null; e.target.src = "/1101109-HA-杯墊興爸.png"; }}
